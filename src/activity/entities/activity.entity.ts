@@ -1,1 +1,34 @@
-export class Activity {}
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { IsString, Length, IsNotEmpty, IsUrl, IsAlpha } from 'class-validator';
+
+
+
+@Entity()
+export class Activity {
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @CreateDateColumn()
+    createdAt: Date;
+
+    @UpdateDateColumn()
+    updatedAt: Date;
+
+    @Column()
+    @Length(1, 250)
+    @IsString()
+    name: string;
+
+    @Column({ default: 'Тут должно быть описание' })
+    @Length(1, 4000)
+    description: string;
+    
+    @Column()
+    @Length(1, 10)
+    @IsAlpha()
+    @IsNotEmpty()
+    routName: string;
+
+
+
+}
