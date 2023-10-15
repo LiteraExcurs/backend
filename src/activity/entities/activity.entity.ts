@@ -2,7 +2,6 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateCol
 import { IsString, Length, IsNotEmpty, IsUrl, IsAlpha } from 'class-validator';
 
 
-
 @Entity()
 export class Activity {
     @PrimaryGeneratedColumn()
@@ -22,13 +21,14 @@ export class Activity {
     @Column({ default: 'Тут должно быть описание' })
     @Length(1, 4000)
     description: string;
-    
+
     @Column()
     @Length(1, 10)
     @IsAlpha()
     @IsNotEmpty()
     routName: string;
 
-
-
+    @IsNotEmpty()
+    @IsUrl()
+    image: string;
 }
