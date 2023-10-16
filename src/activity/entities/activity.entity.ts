@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { IsString, Length, IsNotEmpty, IsUrl, IsAlpha } from 'class-validator';
+import { IsString, Length, IsNotEmpty, IsUrl, IsAlpha, IsBoolean } from 'class-validator';
 
 
 @Entity()
@@ -18,6 +18,14 @@ export class Activity {
     @IsString()
     name: string;
 
+    @Column()
+    @IsString()
+    type: string;
+
+    @Column()
+    @IsString()
+    location: string;
+
     @Column({ default: 'Тут должно быть описание' })
     @Length(1, 4000)
     description: string;
@@ -28,7 +36,13 @@ export class Activity {
     @IsNotEmpty()
     routName: string;
 
+    @Column()
     @IsNotEmpty()
     @IsUrl()
     image: string;
+    
+    @Column({ default: true })
+    @IsBoolean()
+    isActive: boolean;
+  
 }

@@ -3,7 +3,8 @@ import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Activity } from './entities/activity.entity';
-import { Repository } from 'typeorm';
+import { FindManyOptions, IsNull, Not, Repository } from 'typeorm';
+
 
 @Injectable()
 export class ActivityService {
@@ -11,12 +12,20 @@ export class ActivityService {
     @InjectRepository(Activity)
     private activitesRepository: Repository<Activity>,
   ) { }
-  create(createActivityDto: CreateActivityDto) {
-    return 'This action adds a new activity';
+
+  async create(query: CreateActivityDto) {
+    const newActivity = this.activitesRepository.save(query);
+    return newActivity;
   }
 
-  findAll() {
-    return `This action returns all activity`;
+  async findAll() {
+   return await this.activitesRepository.find({
+    select: {
+      id: true,
+      name: true,
+      image: true,
+    }
+   });
   }
 
   findOne(id: number) {
