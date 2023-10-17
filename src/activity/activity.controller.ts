@@ -10,8 +10,10 @@ import {
 import { ActivityService } from './activity.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('activity')
+@ApiTags('Activity')
 export class ActivityController {
   constructor(private readonly activityService: ActivityService) {}
 
