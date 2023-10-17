@@ -36,7 +36,7 @@ export class Activity {
     @IsNotEmpty()
     routName: string;
 
-    @Column()
+    @Column({ default: 'Тут должно быть описание' })
     @IsNotEmpty()
     @IsUrl()
     image: string;

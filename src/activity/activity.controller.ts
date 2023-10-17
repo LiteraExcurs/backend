@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ActivityService } from './activity.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
@@ -17,18 +25,21 @@ export class ActivityController {
     return this.activityService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.activityService.findOne(+id);
+  @Get(':routName')
+  findOne(@Param('routName') routName: string) {
+    return this.activityService.findOne(routName);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateActivityDto: UpdateActivityDto) {
-    return this.activityService.update(+id, updateActivityDto);
+  @Patch(':routName')
+  update(
+    @Param('routName') routName: string,
+    @Body() updateActivityDto: UpdateActivityDto,
+  ) {
+    return this.activityService.update(routName, updateActivityDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.activityService.remove(+id);
+  @Delete(':routName')
+  remove(@Param('routName') routName: string) {
+    return this.activityService.remove(routName);
   }
 }
