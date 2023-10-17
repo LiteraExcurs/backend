@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,7 +17,14 @@ export class ActivityService {
   ) {}
 
   async create(query: CreateActivityDto) {
-    const newActivity = this.activitesRepository.save(query);
+    const { routName } = query;
+    const activity = await this.activitesRepository.findOne({
+      where: { routName },
+    });
+    if (activity) {
+      throw new BadRequestException('Такая активность уже есть');
+    }
+    const newActivity = await this.activitesRepository.save(query);
     return newActivity;
   }
 
