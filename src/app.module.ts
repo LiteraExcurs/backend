@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ActivityModule } from './activity/activity.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Activity } from './activity/entities/activity.entity';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [ActivityModule, TypeOrmModule.forRoot({
@@ -13,9 +14,9 @@ import { Activity } from './activity/entities/activity.entity';
     username: 'postgres',
     password: 'student',
     database: 'literaex',
-    entities: [Activity],
+    entities: [Activity, ],
     synchronize: true,
-  }),],
+  }), FilesModule,],
   controllers: [AppController],
   providers: [AppService],
 })

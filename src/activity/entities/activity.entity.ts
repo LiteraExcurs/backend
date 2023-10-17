@@ -44,5 +44,4 @@ export class Activity {
     @Column({ default: true })
     @IsBoolean()
     isActive: boolean;
-  
 }
