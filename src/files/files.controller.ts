@@ -9,7 +9,7 @@ import { FilesService } from './files.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileElementResponse } from './dto/response-element.dto';
 import { MFile } from './mfile.class';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiProperty, ApiTags } from '@nestjs/swagger';
 
 @Controller('files')
 @ApiTags('Files')

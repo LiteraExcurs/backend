@@ -5,14 +5,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import {
-  IsString,
-  Length,
-  IsNotEmpty,
-  IsUrl,
-  IsAlpha,
-  IsBoolean,
-} from 'class-validator';
+import { IsString, Length, IsNotEmpty, IsUrl, IsAlpha } from 'class-validator';
+
 
 @Entity()
 export class File {
