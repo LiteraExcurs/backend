@@ -7,7 +7,6 @@ import {
 } from 'typeorm';
 import { IsString, Length, IsNotEmpty, IsUrl, IsAlpha } from 'class-validator';
 
-
 @Entity()
 export class File {
   @PrimaryGeneratedColumn()

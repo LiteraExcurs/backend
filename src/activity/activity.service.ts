@@ -7,7 +7,7 @@ import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Activity } from './entities/activity.entity';
-import { FindManyOptions, IsNull, Not, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ActivityService {
@@ -17,9 +17,9 @@ export class ActivityService {
   ) {}
 
   async create(query: CreateActivityDto) {
-    const { routName } = query;
+    const { slug } = query;
     const activity = await this.activitesRepository.findOne({
-      where: { routName },
+      where: { slug },
     });
     if (activity) {
       throw new BadRequestException('Такая активность уже есть');
@@ -34,14 +34,15 @@ export class ActivityService {
         id: true,
         name: true,
         image: true,
-        routName: true,
+        slug: true,
+        isActive: true,
       },
     });
   }
 
-  async findOne(routName: string) {
+  async findOne(slug: string) {
     const activity = await this.activitesRepository.findOne({
-      where: { routName },
+      where: { slug },
     });
     if (activity) {
       return activity;
@@ -49,9 +50,9 @@ export class ActivityService {
     throw new NotFoundException('Такое мероприятие не найдено');
   }
 
-  async update(routName: string, updateActivityDto: UpdateActivityDto) {
+  async update(slug: string, updateActivityDto: UpdateActivityDto) {
     const activity = await this.activitesRepository.findOne({
-      where: { routName },
+      where: { slug },
     });
     if (activity) {
       const { id } = activity;
@@ -61,9 +62,9 @@ export class ActivityService {
     throw new NotFoundException('Такое мероприятие не найдено');
   }
 
-  async remove(routName: string) {
+  async remove(slug: string) {
     const activity = await this.activitesRepository.findOne({
-      where: { routName },
+      where: { slug },
     });
     if (activity) {
       const { id } = activity;

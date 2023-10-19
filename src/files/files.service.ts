@@ -17,7 +17,10 @@ export class FilesService {
     await ensureDir(uploadFolder);
     const res: FileElementResponse[] = [];
     for (const file of files) {
-      await writeFile(`${uploadFolder}/uploads/${file.originalname}`, file.buffer);
+      await writeFile(
+        `${uploadFolder}/uploads/${file.originalname}`,
+        file.buffer,
+      );
       res.push({
         url: `/uploads/${file.originalname}`,
         name: file.originalname,
@@ -27,9 +30,6 @@ export class FilesService {
   }
 
   convertToWepP(file: Buffer): Promise<Buffer> {
-    return sharp(file)
-    .webp({ lossless: true })
-    .toBuffer();
+    return sharp(file).webp({ lossless: true }).toBuffer();
   }
-
 }

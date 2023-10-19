@@ -28,23 +28,23 @@ export class ActivityController {
     return this.activityService.findAll();
   }
 
-  @Get(':routName')
-  findOne(@Param('routName') routName: string): Promise<Activity> {
-    return this.activityService.findOne(routName);
+  @Get(':slug')
+  findOne(@Param('slug') slug: string): Promise<Activity> {
+    return this.activityService.findOne(slug);
   }
 
-  @Patch(':routName')
-  @ApiCreatedResponse({ description: `Активсность {routName} обновлена` })
+  @Patch(':slug')
+  @ApiCreatedResponse({ description: `Активсность {slug} обновлена` })
   update(
-    @Param('routName') routName: string,
+    @Param('slug') slug: string,
     @Body() updateActivityDto: UpdateActivityDto,
   ): Promise<string> {
-    return this.activityService.update(routName, updateActivityDto);
+    return this.activityService.update(slug, updateActivityDto);
   }
 
-  @Delete(':routName')
-  @ApiCreatedResponse({ description: `Активсность {routName} удалена` })
-  remove(@Param('routName') routName: string): Promise<string> {
-    return this.activityService.remove(routName);
+  @Delete(':slug')
+  @ApiCreatedResponse({ description: `Активсность {slug} удалена` })
+  remove(@Param('slug') slug: string): Promise<string> {
+    return this.activityService.remove(slug);
   }
 }
