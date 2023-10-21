@@ -29,7 +29,7 @@ export class CreateActivityDto {
   @ApiProperty({ default: 'moscow' })
   location: string;
 
-  @Length(5, 50)
+  @Length(1, 50)
   @IsLowercase()
   @Matches('[a-z\s\-]')
   @IsNotEmpty()
@@ -43,4 +43,8 @@ export class CreateActivityDto {
   @IsOptional()
   @ApiPropertyOptional()
   isActive: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  isDeleted: boolean
 }

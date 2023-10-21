@@ -10,7 +10,6 @@ import {
   Length,
   IsNotEmpty,
   IsUrl,
-  IsAlpha,
   IsBoolean,
   IsOptional,
   Matches,
@@ -46,7 +45,7 @@ export class Activity {
   description: string;
 
   @Column()
-  @Length(5, 50)
+  @Length(1, 50)
   @IsLowercase()
   @Matches('[a-zA-ZåäöÅÄÖ\s\-]')
   @IsNotEmpty()
@@ -64,4 +63,9 @@ export class Activity {
   @IsBoolean()
   @IsOptional()
   isActive: boolean;
+
+  @Column({ default: false })
+  @IsBoolean()
+  @IsOptional()
+  isDeleted: boolean
 }

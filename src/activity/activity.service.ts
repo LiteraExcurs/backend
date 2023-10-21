@@ -36,6 +36,8 @@ export class ActivityService {
         image: true,
         slug: true,
         isActive: true,
+        location: true,
+        type: true,
       },
     });
   }
