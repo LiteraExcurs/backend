@@ -1,7 +1,7 @@
 import { IsAlpha, IsNotEmpty, IsString, IsUrl, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateFileDto {
+export class CreateFileDto  {
   @IsString()
   @IsAlpha()
   @IsNotEmpty()
@@ -12,7 +12,7 @@ export class CreateFileDto {
   @Length(1, 500)
   @IsNotEmpty()
   @ApiProperty()
-  description: string;
+  type: string;
 
   @IsNotEmpty()
   @IsUrl()

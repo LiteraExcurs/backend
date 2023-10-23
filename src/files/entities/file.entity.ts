@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IsString, Length, IsNotEmpty, IsUrl, IsAlpha } from 'class-validator';
+import { IsString, Length, IsNotEmpty, IsUrl, IsAlpha, IsOptional } from 'class-validator';
 
 @Entity()
 export class File {
@@ -25,10 +25,11 @@ export class File {
   @IsNotEmpty()
   name: string;
 
-  @Column()
+  @Column({default: ''})
   @Length(1, 500)
-  @IsNotEmpty()
-  description: string;
+  @IsOptional()
+  @IsAlpha()
+  type: string;
 
   @Column()
   @IsNotEmpty()
