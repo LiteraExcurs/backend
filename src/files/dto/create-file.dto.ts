@@ -14,6 +14,11 @@ export class CreateFileDto  {
   @ApiProperty()
   type: string;
 
+  @Length(1, 50)
+  @IsNotEmpty()
+  @ApiProperty()
+  slug: string;
+
   @IsNotEmpty()
   @IsUrl()
   @ApiProperty()

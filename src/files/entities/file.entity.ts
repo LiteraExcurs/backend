@@ -25,11 +25,18 @@ export class File {
   @IsNotEmpty()
   name: string;
 
+  @Column()
+  @Length(1, 500)
+  @IsNotEmpty()
+  @IsAlpha()
+  type: string;
+
   @Column({default: ''})
   @Length(1, 500)
   @IsOptional()
   @IsAlpha()
-  type: string;
+  slug: string;
+
 
   @Column()
   @IsNotEmpty()

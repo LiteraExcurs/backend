@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateFileDto } from './dto/create-file.dto';
 import { MFile } from './mfile.class';
 import { FileElementResponse } from './dto/response-element.dto';
@@ -14,34 +14,32 @@ export class FilesService {
   constructor(
     @InjectRepository(File)
     private createFileDto: Repository<File>,
-  ) { }
+  ) {}
 
+  async convertToWepP(file: Buffer): Promise<Buffer> {
+    return sharp(file).webp({ lossless: true }).toBuffer();
+  }
 
-  async saveFile(files: MFile[]): Promise<FileElementResponse[]> {
+  async saveFile(files: MFile[], entitiType: string): Promise<FileElementResponse[]> {
     const uploadFolder = `${path}`;
     await ensureDir(uploadFolder);
     const res: FileElementResponse[] = [];
+
     for (const file of files) {
-      await writeFile(
-        `${uploadFolder}/uploads/${file.originalname}`,
-        file.buffer,
-      );
+      const webpFile = await this.convertToWepP(file.buffer);
+      await writeFile(`${uploadFolder}/uploads/${entitiType}/${file.originalname}`, webpFile);
       res.push({
-        url: `/uploads/${file.originalname}`,
+        url: `/static/${entitiType}/${file.originalname}`,
         name: file.originalname,
       });
       this.createRecord({
         name: file.originalname,
-        type: file.originalname,
-        url: `/uploads/${file.originalname}`,
-
-      })
+        type: entitiType,
+        slug: file.originalname,
+        url: `/static/${entitiType}/${file.originalname}`,
+      });
     }
     return res;
-  }
-
-  async convertToWepP(file: Buffer): Promise<Buffer> {
-    return sharp(file).webp({ lossless: true }).toBuffer();
   }
 
   async createRecord(query: CreateFileDto): Promise<File> {

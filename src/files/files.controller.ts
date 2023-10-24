@@ -15,20 +15,35 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('Files')
 export class FilesController {
   constructor(private readonly filesService: FilesService) {}
-  @Post('upload')
+  @Post('upload-activity')
   @HttpCode(200)
   @UseInterceptors(FileInterceptor('files'))
-  async uploadedFile(
+  async uploadedActivityFile(
     @UploadedFile() file: Express.Multer.File,
   ): Promise<FileElementResponse[]> {
-    const saveArray: MFile[] = [new MFile(file)];
-    const buffer = await this.filesService.convertToWepP(file.buffer);
+    const saveArray: MFile[] = [];
     saveArray.push(
       new MFile({
         originalname: `${file.originalname.split('.')[0]}.webp`,
-        buffer,
+        buffer: file.buffer,
       }),
     );
-    return this.filesService.saveFile(saveArray);
+    return this.filesService.saveFile(saveArray, 'activities');
+  }
+
+  @Post('upload-guide')
+  @HttpCode(200)
+  @UseInterceptors(FileInterceptor('files'))
+  async uploadGuidFile(
+    @UploadedFile() file: Express.Multer.File,
+  ): Promise<FileElementResponse[]> {
+    const saveArray: MFile[] = [];
+    saveArray.push(
+      new MFile({
+        originalname: `${file.originalname.split('.')[0]}.webp`,
+        buffer: file.buffer,
+      }),
+    );
+    return this.filesService.saveFile(saveArray, 'guides');
   }
 }
