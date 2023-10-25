@@ -13,21 +13,27 @@ import { Repository } from 'typeorm';
 export class FilesService {
   constructor(
     @InjectRepository(File)
-    private createFileDto: Repository<File>,
+    private filesRepository: Repository<File>,
   ) {}
 
   async convertToWepP(file: Buffer): Promise<Buffer> {
     return sharp(file).webp({ lossless: true }).toBuffer();
   }
 
-  async saveFile(files: MFile[], entitiType: string): Promise<FileElementResponse[]> {
+  async saveFile(
+    files: MFile[],
+    entitiType: string,
+  ): Promise<FileElementResponse[]> {
     const uploadFolder = `${path}`;
     await ensureDir(uploadFolder);
     const res: FileElementResponse[] = [];
 
     for (const file of files) {
       const webpFile = await this.convertToWepP(file.buffer);
-      await writeFile(`${uploadFolder}/uploads/${entitiType}/${file.originalname}`, webpFile);
+      await writeFile(
+        `${uploadFolder}/uploads/${entitiType}/${file.originalname}`,
+        webpFile,
+      );
       res.push({
         url: `/static/${entitiType}/${file.originalname}`,
         name: file.originalname,
@@ -43,7 +49,10 @@ export class FilesService {
   }
 
   async createRecord(query: CreateFileDto): Promise<File> {
-    const newFile = await this.createFileDto.save(query);
+    const newFile = await this.filesRepository.save(query);
     return newFile;
+  }
+  async getAllFiles(): Promise<File[]> {
+    return await this.filesRepository.find();
   }
 }

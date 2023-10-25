@@ -7,6 +7,7 @@ import { Activity } from './activity/entities/activity.entity';
 import { FilesModule } from './files/files.module';
 import { GuidesModule } from './guides/guides.module';
 import { File } from './files/entities/file.entity';
+import { Guide } from './guides/entities/guide.entity';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { File } from './files/entities/file.entity';
       username: 'postgres',
       password: 'student',
       database: 'literaex',
-      entities: [Activity, File],
+      entities: [Activity, File, Guide],
       synchronize: true,
     }),
     FilesModule,

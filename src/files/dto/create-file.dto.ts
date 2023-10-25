@@ -1,7 +1,7 @@
 import { IsAlpha, IsNotEmpty, IsString, IsUrl, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateFileDto  {
+export class CreateFileDto {
   @IsString()
   @IsAlpha()
   @IsNotEmpty()

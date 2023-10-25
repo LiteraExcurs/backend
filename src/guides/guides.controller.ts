@@ -10,8 +10,10 @@ import {
 import { GuidesService } from './guides.service';
 import { CreateGuideDto } from './dto/create-guide.dto';
 import { UpdateGuideDto } from './dto/update-guide.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('guides')
+@ApiTags('Guides')
 export class GuidesController {
   constructor(private readonly guidesService: GuidesService) {}
 
@@ -23,11 +25,6 @@ export class GuidesController {
   @Get()
   findAll() {
     return this.guidesService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.guidesService.findOne(+id);
   }
 
   @Patch(':id')
