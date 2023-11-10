@@ -47,7 +47,7 @@ export class Activity {
   @Column()
   @Length(1, 50)
   @IsLowercase()
-  @Matches('[a-zA-ZåäöÅÄÖ\s\-]')
+  @Matches('[a-zA-ZåäöÅÄÖs-]')
   @IsNotEmpty()
   slug: string;
 
@@ -67,5 +67,5 @@ export class Activity {
   @Column({ default: false })
   @IsBoolean()
   @IsOptional()
-  isDeleted: boolean
+  isDeleted: boolean;
 }

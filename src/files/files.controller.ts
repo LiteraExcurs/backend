@@ -1,5 +1,6 @@
 import {
   Controller,
+  Get,
   HttpCode,
   Post,
   UploadedFile,
@@ -45,5 +46,9 @@ export class FilesController {
       }),
     );
     return this.filesService.saveFile(saveArray, 'guides');
+  }
+  @Get()
+  getFiles() {
+    return this.filesService.getAllFiles();
   }
 }
