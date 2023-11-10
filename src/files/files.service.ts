@@ -40,7 +40,7 @@ export class FilesService {
           name: file.originalname,
         });
       } catch (err) {
-        console.log(err);
+        throw new Error(err);
       }
 
       await this.createRecord({
