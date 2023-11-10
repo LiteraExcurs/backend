@@ -44,7 +44,7 @@ export class Activity {
   @Length(1, 4000)
   description: string;
 
-  @Column()
+  @Column({ default: 'example' })
   @Length(1, 50)
   @IsLowercase()
   @Matches('[a-zA-ZåäöÅÄÖs-]')

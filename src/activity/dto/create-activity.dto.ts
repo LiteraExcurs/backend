@@ -10,6 +10,7 @@ import {
   Matches,
   IsLowercase,
 } from 'class-validator';
+
 export class CreateActivityDto {
   @Length(1, 250)
   @IsString()

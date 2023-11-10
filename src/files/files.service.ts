@@ -43,6 +43,14 @@ export class FilesService {
         throw new Error(err);
       }
 
+      await writeFile(
+        `${uploadFolder}/uploads/${entitiType}/${file.originalname}`,
+        webpFile,
+      );
+      res.push({
+        url: `/static/${entitiType}/${file.originalname}`,
+        name: file.originalname,
+      });
       await this.createRecord({
         name: file.originalname,
         type: entitiType,
