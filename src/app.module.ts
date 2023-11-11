@@ -10,6 +10,9 @@ import { File } from './files/entities/file.entity';
 import { Guide } from './guides/entities/guide.entity';
 import { User } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
+import { AuthService } from './auth/auth.service';
+import { AuthController } from './auth/auth.controller';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -27,8 +30,9 @@ import { UserModule } from './user/user.module';
     FilesModule,
     GuidesModule,
     UserModule,
+    AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, AuthController],
+  providers: [AppService, AuthService],
 })
 export class AppModule {}
