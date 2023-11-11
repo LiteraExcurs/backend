@@ -58,5 +58,5 @@ export class Guide {
 
   @Column('int', { default: 0 })
   @IsOptional()
-  raiting: number;
+  rating: number;
 }

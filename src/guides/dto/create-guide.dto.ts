@@ -29,7 +29,7 @@ export class CreateGuideDto {
 
   @IsOptional()
   @ApiPropertyOptional()
-  lokation: string;
+  location: string;
 
   @IsOptional()
   @ApiPropertyOptional()
@@ -37,5 +37,5 @@ export class CreateGuideDto {
 
   @IsOptional()
   @ApiPropertyOptional()
-  raiting: number;
+  rating: number;
 }

@@ -34,7 +34,6 @@ export class FilesService {
 
     for (const file of files) {
       const webpFile = await this.convertToWepP(file.buffer);
-
       try {
         await writeFile(
           `${uploadFolder}/uploads/${entityType}/${randomName}.webp`,
@@ -58,8 +57,8 @@ export class FilesService {
     return res;
   }
 
-  async createRecord(query: CreateFileDto): Promise<File> {
-    return await this.filesRepository.save(query);
+  async createRecord(data: CreateFileDto): Promise<File> {
+    return await this.filesRepository.save(data);
   }
   async getAllFiles(): Promise<File[]> {
     return await this.filesRepository.find();
