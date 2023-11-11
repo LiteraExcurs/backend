@@ -1,7 +1,10 @@
 import {
   Controller,
+  FileTypeValidator,
   Get,
   HttpCode,
+  MaxFileSizeValidator,
+  ParseFilePipe,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -23,12 +26,18 @@ export class FilesController {
     @UploadedFile() file: Express.Multer.File,
   ): Promise<FileElementResponse[]> {
     const saveArray: MFile[] = [];
-    saveArray.push(
-      new MFile({
-        originalname: `${file.originalname.split('.')[0]}.webp`,
-        buffer: file.buffer,
-      }),
-    );
+    new ParseFilePipe({
+      validators: [
+        new MaxFileSizeValidator({ maxSize: 1000 }),
+        new FileTypeValidator({ fileType: 'image/jpeg' }),
+      ],
+    }),
+      saveArray.push(
+        new MFile({
+          originalname: `${file.originalname.split('.')[0]}.webp`,
+          buffer: file.buffer,
+        }),
+      );
     return this.filesService.saveFile(saveArray, 'activities');
   }
 
@@ -39,12 +48,18 @@ export class FilesController {
     @UploadedFile() file: Express.Multer.File,
   ): Promise<FileElementResponse[]> {
     const saveArray: MFile[] = [];
-    saveArray.push(
-      new MFile({
-        originalname: `${file.originalname.split('.')[0]}.webp`,
-        buffer: file.buffer,
-      }),
-    );
+    new ParseFilePipe({
+      validators: [
+        new MaxFileSizeValidator({ maxSize: 1000 }),
+        new FileTypeValidator({ fileType: 'image/jpeg' }),
+      ],
+    }),
+      saveArray.push(
+        new MFile({
+          originalname: `${file.originalname.split('.')[0]}.webp`,
+          buffer: file.buffer,
+        }),
+      );
     return this.filesService.saveFile(saveArray, 'guides');
   }
   @Get()

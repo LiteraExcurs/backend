@@ -24,18 +24,18 @@ export class Guide {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column()
+  @Column('varchar')
   @Length(1, 250)
   @IsString()
   name: string;
 
-  @Column({ default: 'Тут должно быть описание' })
+  @Column('varchar', { default: 'Тут должно быть описание' })
   @Length(1, 4000)
   @IsString()
   @IsOptional()
   description: string;
 
-  @Column({
+  @Column('varchar', {
     default:
       'https://proprikol.ru/wp-content/uploads/2022/10/kartinki-na-avatarku-dlya-parnej-i-muzhchin-88.jpg',
   })
@@ -43,20 +43,20 @@ export class Guide {
   @IsOptional()
   image: string;
 
-  @Column({ default: true })
+  @Column('boolean', { default: true })
   @IsBoolean()
   @IsOptional()
   isActive: boolean;
 
-  @Column({ default: 'moscow' })
+  @Column('varchar', { default: 'moscow' })
   @IsOptional()
-  lokation: string;
+  location: string;
 
-  @Column({ default: 0 })
+  @Column('int', { default: 0 })
   @IsOptional()
   completed: number;
 
-  @Column({ default: 0 })
+  @Column('int', { default: 0 })
   @IsOptional()
   raiting: number;
 }

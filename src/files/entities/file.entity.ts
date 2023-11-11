@@ -25,24 +25,24 @@ export class File {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column()
+  @Column('varchar')
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @Column()
+  @Column('varchar')
   @Length(1, 500)
   @IsNotEmpty()
   @IsAlpha()
   type: string;
 
-  @Column({ default: '' })
+  @Column('varchar')
   @Length(1, 500)
   @IsOptional()
   @IsAlpha()
   slug: string;
 
-  @Column()
+  @Column('varchar')
   @IsNotEmpty()
   @IsUrl()
   url: string;

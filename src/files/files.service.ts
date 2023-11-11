@@ -8,6 +8,7 @@ import * as sharp from 'sharp';
 import { File } from './entities/file.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { randomId } from './files.utils';
 
 @Injectable()
 export class FilesService {
@@ -22,40 +23,36 @@ export class FilesService {
 
   async saveFile(
     files: MFile[],
-    entitiType: string,
+    entityType: string,
   ): Promise<FileElementResponse[]> {
     const uploadFolder = `${path}`;
     await ensureDir(uploadFolder);
     const res: FileElementResponse[] = [];
 
+    // Генерируем имя случайным образом
+    const randomName = randomId();
+
     for (const file of files) {
       const webpFile = await this.convertToWepP(file.buffer);
+
       try {
         await writeFile(
-          `${uploadFolder}/uploads/${entitiType}/${file.originalname}`,
+          `${uploadFolder}/uploads/${entityType}/${randomName}.webp`,
           webpFile,
         );
         res.push({
-          url: `/static/${entitiType}/${file.originalname}`,
-          name: file.originalname,
+          url: `/static/${entityType}/${randomName}.webp`,
+          name: `${randomName}.webp`,
         });
       } catch (err) {
         throw new Error(err);
       }
 
-      await writeFile(
-        `${uploadFolder}/uploads/${entitiType}/${file.originalname}`,
-        webpFile,
-      );
-      res.push({
-        url: `/static/${entitiType}/${file.originalname}`,
-        name: file.originalname,
-      });
       await this.createRecord({
         name: file.originalname,
-        type: entitiType,
-        slug: file.originalname,
-        url: `/static/${entitiType}/${file.originalname}`,
+        type: entityType,
+        slug: randomName,
+        url: `/static/${entityType}/${randomName}`,
       });
     }
     return res;
