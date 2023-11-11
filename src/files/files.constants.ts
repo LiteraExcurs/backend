@@ -1,4 +1,4 @@
 export const enum filesDirectory {
-  activity = 'activity',
+  activities = 'activities',
   guides = 'guides',
 }

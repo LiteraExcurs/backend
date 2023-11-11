@@ -11,6 +11,7 @@ import {
   IsBoolean,
   IsOptional,
   IsUrl,
+  MinLength,
 } from 'class-validator';
 
 @Entity()
@@ -58,5 +59,6 @@ export class Guide {
 
   @Column('int', { default: 0 })
   @IsOptional()
+  @MinLength(1)
   rating: number;
 }

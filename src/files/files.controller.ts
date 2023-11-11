@@ -14,6 +14,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { FileElementResponse } from './dto/response-element.dto';
 import { MFile } from './mfile.class';
 import { ApiTags } from '@nestjs/swagger';
+import { filesDirectory } from './files.constants';
 
 @Controller('files')
 @ApiTags('Files')
@@ -31,14 +32,14 @@ export class FilesController {
         new MaxFileSizeValidator({ maxSize: 1000 }),
         new FileTypeValidator({ fileType: 'image/jpeg' }),
       ],
-    }),
-      saveArray.push(
-        new MFile({
-          originalname: `${file.originalname.split('.')[0]}.webp`,
-          buffer: file.buffer,
-        }),
-      );
-    return this.filesService.saveFile(saveArray, 'activities');
+    });
+    saveArray.push(
+      new MFile({
+        originalname: `${file.originalname.split('.')[0]}.webp`,
+        buffer: file.buffer,
+      }),
+    );
+    return this.filesService.saveFile(saveArray, filesDirectory.activities);
   }
 
   @Post('upload-guide')
@@ -48,18 +49,19 @@ export class FilesController {
     @UploadedFile() file: Express.Multer.File,
   ): Promise<FileElementResponse[]> {
     const saveArray: MFile[] = [];
+
     new ParseFilePipe({
       validators: [
         new MaxFileSizeValidator({ maxSize: 1000 }),
         new FileTypeValidator({ fileType: 'image/jpeg' }),
       ],
-    }),
-      saveArray.push(
-        new MFile({
-          originalname: `${file.originalname.split('.')[0]}.webp`,
-          buffer: file.buffer,
-        }),
-      );
+    });
+    saveArray.push(
+      new MFile({
+        originalname: `${file.originalname.split('.')[0]}.webp`,
+        buffer: file.buffer,
+      }),
+    );
     return this.filesService.saveFile(saveArray, 'guides');
   }
   @Get()

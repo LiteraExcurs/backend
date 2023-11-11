@@ -47,6 +47,7 @@ export class FilesService {
         throw new Error(err);
       }
 
+      //Создаем запить в базе, сохранив изначальное имя файла
       await this.createRecord({
         name: file.originalname,
         type: entityType,
