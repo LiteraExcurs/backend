@@ -23,7 +23,7 @@ export class CreateActivityDto {
   description: string;
 
   @IsString()
-  @ApiProperty({ default: 'excurs' })
+  @ApiProperty({ default: 'excursion' })
   type: string;
 
   @IsString()

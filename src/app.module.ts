@@ -8,6 +8,8 @@ import { FilesModule } from './files/files.module';
 import { GuidesModule } from './guides/guides.module';
 import { File } from './files/entities/file.entity';
 import { Guide } from './guides/entities/guide.entity';
+import { User } from './user/entities/user.entity';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -19,11 +21,12 @@ import { Guide } from './guides/entities/guide.entity';
       username: 'postgres',
       password: 'student',
       database: 'literaex',
-      entities: [Activity, File, Guide],
+      entities: [Activity, File, Guide, User],
       synchronize: true,
     }),
     FilesModule,
     GuidesModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

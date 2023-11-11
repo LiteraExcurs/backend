@@ -9,16 +9,16 @@ export class CreateFileDto {
 
   @Length(1, 500)
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ default: 'example_name' })
   type: string;
 
   @Length(1, 50)
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ default: 'someRandomId' })
   slug: string;
 
   @IsNotEmpty()
   @IsUrl()
-  @ApiProperty()
+  @ApiProperty({ default: `{BASE_URL}/static/{directoryName}/someRandomId` })
   url: string;
 }
