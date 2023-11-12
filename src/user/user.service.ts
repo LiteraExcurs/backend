@@ -16,9 +16,9 @@ export class UserService {
     return await this.userRepository.findOne(query);
   }
   async createUser(payload: CreateUserDto): Promise<User> {
-    const { email } = payload;
+    const { login } = payload;
 
-    if (await this.findOne({ where: [{ email }] })) {
+    if (await this.findOne({ where: [{ login }] })) {
       throw new ConflictException('Такой пользователь уже зарегистрирован');
     }
     const salt = await genSalt(10);

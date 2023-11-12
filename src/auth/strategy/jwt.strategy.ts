@@ -6,14 +6,14 @@ import { User } from '../../user/entities/user.entity';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private readonly configServise: ConfigService) {
+  constructor(private readonly configService: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: true,
-      secretOrKey: configServise.get('JWT_SECRET'),
+      secretOrKey: configService.get('JWT_SECRET')
     });
   }
-  async validate({ email }: Pick<User, 'email'>) {
-    return email;
+  async validate({ login }: Pick<User, 'login'>) {
+    return login;
   }
 }
