@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { genSalt, hash } from 'bcryptjs';
-import { Repository, FindOneOptions } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 
@@ -11,9 +11,13 @@ export class UserService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
   ) {}
-
-  async findOne(query: FindOneOptions<User>) {
-    return await this.userRepository.findOne(query);
+  findOne(query: FindOneOptions<User>) {
+    return this.userRepository.findOne(query);
+  }
+  findByUsername(login: string) {
+    return this.findOne({
+      where: { login },
+    });
   }
   async createUser(payload: CreateUserDto): Promise<User> {
     const { login } = payload;
@@ -22,11 +26,9 @@ export class UserService {
       throw new ConflictException('Такой пользователь уже зарегистрирован');
     }
     const salt = await genSalt(10);
-    const user = await this.userRepository.save({
+    return await this.userRepository.save({
       ...payload,
       password: await hash(payload.password, salt),
     });
-
-    return user;
   }
 }

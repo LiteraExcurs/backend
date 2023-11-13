@@ -9,6 +9,7 @@ import { File } from './entities/file.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { randomId } from './files.utils';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class FilesService {
