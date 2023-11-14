@@ -20,7 +20,7 @@ export class AuthService {
     if (!isCorrectPassword) {
       throw new UnauthorizedException('Неверный пароль');
     }
-    return { email: user.login };
+    return { email: user.email };
   }
 
   async login(email: string) {

@@ -20,7 +20,7 @@ export class User {
 
   @Column('varchar', { length: 500 })
   @IsEmail()
-  login: string;
+  email: string;
 
   @Column('varchar')
   @IsString()

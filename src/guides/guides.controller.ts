@@ -18,8 +18,9 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 @ApiTags('Guides')
 export class GuidesController {
   constructor(private readonly guidesService: GuidesService) {}
-  @UseGuards(JwtAuthGuard)
+
   @Post()
+  @UseGuards(JwtAuthGuard)
   create(@Body() createGuideDto: CreateGuideDto) {
     return this.guidesService.create(createGuideDto);
   }
