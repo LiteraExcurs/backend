@@ -40,26 +40,26 @@ export class GuidesService {
   }
 
   async update(id: number, query: UpdateGuideDto) {
-    const activity = await this.guidessRepository.findOne({
+    const guide = await this.guidessRepository.findOne({
       where: { id },
     });
-    if (activity) {
-      const { id } = activity;
+    if (guide) {
+      const { id } = guide;
       await this.guidessRepository.update(id, query);
-      return `Гид ${activity.name} обновлена успешно`;
+      return `Гид ${guide.name} обновлена успешно`;
     }
-    throw new NotFoundException('Такой гид уже есть');
+    throw new NotFoundException('Гид с таким именем уже есть');
   }
 
   async remove(id: number) {
-    const activity = await this.guidessRepository.findOne({
+    const guide = await this.guidessRepository.findOne({
       where: { id },
     });
-    if (activity) {
-      const { id } = activity;
+    if (guide) {
+      const { id } = guide;
       await this.guidessRepository.delete(id);
-      return `Гид ${activity.name} удален успешно`;
+      return `Гид ${guide.name} удален успешно`;
     }
-    throw new NotFoundException('Такой гид уже зарегистрирован');
+    throw new NotFoundException('Гида с таким именем не существует');
   }
 }

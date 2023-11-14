@@ -34,6 +34,7 @@ export class Activity {
 
   @Column('varchar', { length: 250 })
   @IsString()
+  //Добавить enum после уточнения типа активностей у заказчика
   type: string;
 
   @Column()
@@ -44,7 +45,7 @@ export class Activity {
   @Length(1, 4000)
   description: string;
 
-  @Column('varchar', { length: 50, default: 'example' })
+  @Column('varchar', { length: 50, default: 'example', unique: true })
   @Length(1, 50)
   @IsLowercase()
   @Matches('[a-zA-ZåäöÅÄÖs-]')
@@ -61,11 +62,9 @@ export class Activity {
 
   @Column('boolean', { default: true })
   @IsBoolean()
-  @IsOptional()
   isActive: boolean;
 
   @Column('boolean', { default: false })
   @IsBoolean()
-  @IsOptional()
   isDeleted: boolean;
 }

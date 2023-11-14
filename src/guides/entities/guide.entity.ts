@@ -52,7 +52,6 @@ export class Guide {
 
   @Column('varchar', { length: 200, default: 'moscow' })
   @Length(1, 500)
-  @IsOptional()
   location: string;
 
   @Column('int', { default: 0 })
