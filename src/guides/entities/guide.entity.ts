@@ -55,11 +55,9 @@ export class Guide {
   location: string;
 
   @Column('int', { default: 0 })
-  @IsOptional()
   completed: number;
 
   @Column('int', { default: 0 })
-  @IsOptional()
   @MinLength(1)
   rating: number;
 }
