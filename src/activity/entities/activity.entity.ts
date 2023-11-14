@@ -27,12 +27,12 @@ export class Activity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column()
+  @Column('varchar')
   @Length(1, 250)
   @IsString()
   name: string;
 
-  @Column()
+  @Column('varchar')
   @IsString()
   type: string;
 
@@ -40,18 +40,18 @@ export class Activity {
   @IsString()
   location: string;
 
-  @Column({ default: 'Тут должно быть описание' })
+  @Column('varchar',{ default: 'Тут должно быть описание' })
   @Length(1, 4000)
   description: string;
 
-  @Column()
+  @Column('varchar',{ default: 'example' })
   @Length(1, 50)
   @IsLowercase()
-  @Matches('[a-zA-ZåäöÅÄÖ\s\-]')
+  @Matches('[a-zA-ZåäöÅÄÖs-]')
   @IsNotEmpty()
   slug: string;
 
-  @Column({
+  @Column('varchar',{
     default:
       'https://static15.tgcnt.ru/posts/_0/13/139270e278f102784afe165cf2b8566a.jpg',
   })
@@ -59,13 +59,13 @@ export class Activity {
   @IsUrl()
   image: string;
 
-  @Column({ default: true })
+  @Column('varchar',{ default: true })
   @IsBoolean()
   @IsOptional()
   isActive: boolean;
 
-  @Column({ default: false })
+  @Column('varchar',{ default: false })
   @IsBoolean()
   @IsOptional()
-  isDeleted: boolean
+  isDeleted: boolean;
 }

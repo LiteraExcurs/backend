@@ -6,6 +6,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Activity } from './activity/entities/activity.entity';
 import { FilesModule } from './files/files.module';
 import { GuidesModule } from './guides/guides.module';
+import { File } from './files/entities/file.entity';
+import { Guide } from './guides/entities/guide.entity';
+import { User } from './user/entities/user.entity';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -17,11 +21,12 @@ import { GuidesModule } from './guides/guides.module';
       username: 'postgres',
       password: 'student',
       database: 'literaex',
-      entities: [Activity],
+      entities: [Activity, File, Guide, User],
       synchronize: true,
     }),
     FilesModule,
     GuidesModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

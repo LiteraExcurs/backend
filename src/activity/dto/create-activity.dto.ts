@@ -10,6 +10,7 @@ import {
   Matches,
   IsLowercase,
 } from 'class-validator';
+
 export class CreateActivityDto {
   @Length(1, 250)
   @IsString()
@@ -22,7 +23,7 @@ export class CreateActivityDto {
   description: string;
 
   @IsString()
-  @ApiProperty({ default: 'excurs' })
+  @ApiProperty({ default: 'excursion' })
   type: string;
 
   @IsString()
@@ -31,7 +32,7 @@ export class CreateActivityDto {
 
   @Length(1, 50)
   @IsLowercase()
-  @Matches('[a-z\s\-]')
+  @Matches('[a-zs-]')
   @IsNotEmpty()
   slug: string;
 
@@ -46,5 +47,5 @@ export class CreateActivityDto {
 
   @IsBoolean()
   @IsOptional()
-  isDeleted: boolean
+  isDeleted: boolean;
 }
