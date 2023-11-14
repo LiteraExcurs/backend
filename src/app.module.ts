@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Activity } from './activity/entities/activity.entity';
 import { FilesModule } from './files/files.module';
 import { GuidesModule } from './guides/guides.module';
+import { EventModule } from './event/event.module';
+import { BookingModule } from './booking/booking.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { GuidesModule } from './guides/guides.module';
     }),
     FilesModule,
     GuidesModule,
+    EventModule,
+    BookingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
