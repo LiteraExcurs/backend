@@ -18,7 +18,7 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column('varchar')
+  @Column('varchar', { length: 500 })
   @IsEmail()
   login: string;
 
