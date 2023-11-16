@@ -14,15 +14,15 @@ export class UserService {
   findOne(query: FindOneOptions<User>) {
     return this.userRepository.findOne(query);
   }
-  findByUsername(email: string) {
+  findByUsername(login: string) {
     return this.findOne({
-      where: { email },
+      where: { login },
     });
   }
   async createUser(payload: CreateUserDto): Promise<User> {
     const { login } = payload;
 
-    if (await this.findOne({ where: [{ email: login }] })) {
+    if (await this.findOne({ where: [{ login }] })) {
       throw new ConflictException('Такой пользователь уже зарегистрирован');
     }
     const salt = await genSalt(10);
