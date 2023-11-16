@@ -8,14 +8,16 @@ import {
 import {
   IsString,
   Length,
+  IsNotEmpty,
+  IsUrl,
   IsBoolean,
   IsOptional,
-  IsUrl,
-  MinLength,
+  Matches,
+  IsLowercase,
 } from 'class-validator';
 
 @Entity()
-export class Guide {
+export class Activity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -30,34 +32,39 @@ export class Guide {
   @IsString()
   name: string;
 
+  @Column('varchar', { length: 250 })
+  @IsString()
+  //Добавить enum после уточнения типа активностей у заказчика
+  type: string;
+
+  @Column()
+  @IsString()
+  location: string;
+
   @Column('varchar', { length: 4000, default: 'Тут должно быть описание' })
   @Length(1, 4000)
-  @IsString()
-  @IsOptional()
   description: string;
 
+  @Column('varchar', { length: 50, default: 'example', unique: true })
+  @Length(1, 50)
+  @IsLowercase()
+  @Matches('[a-zA-ZåäöÅÄÖs-]')
+  @IsNotEmpty()
+  slug: string;
+
   @Column('varchar', {
-    length: 1000,
     default:
-      'https://proprikol.ru/wp-content/uploads/2022/10/kartinki-na-avatarku-dlya-parnej-i-muzhchin-88.jpg',
+      'https://static15.tgcnt.ru/posts/_0/13/139270e278f102784afe165cf2b8566a.jpg',
   })
+  @IsNotEmpty()
   @IsUrl()
-  @IsOptional()
   image: string;
 
   @Column('boolean', { default: true })
   @IsBoolean()
-  @IsOptional()
   isActive: boolean;
 
-  @Column('varchar', { length: 200, default: 'moscow' })
-  @Length(1, 500)
-  location: string;
-
-  @Column('int', { default: 0 })
-  completed: number;
-
-  @Column('int', { default: 0 })
-  @MinLength(1)
-  rating: number;
+  @Column('boolean', { default: false })
+  @IsBoolean()
+  isDeleted: boolean;
 }

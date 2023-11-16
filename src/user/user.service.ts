@@ -14,14 +14,13 @@ export class UserService {
   findOne(query: FindOneOptions<User>) {
     return this.userRepository.findOne(query);
   }
-  findByUsername(email: string) {
+  findByUsername(login: string) {
     return this.findOne({
-      where: { login: email },
+      where: { login },
     });
   }
   async createUser(payload: CreateUserDto): Promise<string> {
     const { login } = payload;
-
     if (await this.findOne({ where: [{ login: login }] })) {
       throw new ConflictException('Такой пользователь уже зарегистрирован');
     }
