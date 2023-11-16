@@ -16,19 +16,20 @@ export class UserService {
   }
   findByUsername(email: string) {
     return this.findOne({
-      where: { email },
+      where: { login: email },
     });
   }
-  async createUser(payload: CreateUserDto): Promise<User> {
+  async createUser(payload: CreateUserDto): Promise<string> {
     const { login } = payload;
 
-    if (await this.findOne({ where: [{ email: login }] })) {
+    if (await this.findOne({ where: [{ login: login }] })) {
       throw new ConflictException('Такой пользователь уже зарегистрирован');
     }
     const salt = await genSalt(10);
-    return await this.userRepository.save({
+    await this.userRepository.save({
       ...payload,
       password: await hash(payload.password, salt),
     });
+    return `пользвователь с логином ${login} успешно создан`;
   }
 }
