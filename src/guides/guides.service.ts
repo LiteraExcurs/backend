@@ -13,22 +13,21 @@ import { Repository } from 'typeorm';
 export class GuidesService {
   constructor(
     @InjectRepository(Guide)
-    private guidessRepository: Repository<Guide>,
+    private guidesRepository: Repository<Guide>,
   ) {}
   async create(query: CreateGuideDto) {
     const { name } = query;
-    const guide = await this.guidessRepository.findOne({
+    const guide = await this.guidesRepository.findOne({
       where: { name },
     });
-    if (guide) {
-      throw new BadRequestException('Гид с таким именем уже есть');
+    if (!guide) {
+      return await this.guidesRepository.save(query);
     }
-    const newGuide = await this.guidessRepository.save(query);
-    return newGuide;
+    throw new BadRequestException('Гид с таким именем уже есть');
   }
 
   async findAll() {
-    return await this.guidessRepository.find({
+    return await this.guidesRepository.find({
       select: {
         id: true,
         name: true,
@@ -40,26 +39,24 @@ export class GuidesService {
   }
 
   async update(id: number, query: UpdateGuideDto) {
-    const activity = await this.guidessRepository.findOne({
+    const guide = await this.guidesRepository.findOne({
       where: { id },
     });
-    if (activity) {
-      const { id } = activity;
-      await this.guidessRepository.update(id, query);
-      return `Гид ${activity.name} обновлена успешно`;
+    if (!guide) {
+      throw new NotFoundException('Гида с таким именем не существует');
     }
-    throw new NotFoundException('Такой гид уже есть');
+    await this.guidesRepository.update(id, query);
+    return `Гид ${guide.name} обновлена успешно`;
   }
 
   async remove(id: number) {
-    const activity = await this.guidessRepository.findOne({
+    const guide = await this.guidesRepository.findOne({
       where: { id },
     });
-    if (activity) {
-      const { id } = activity;
-      await this.guidessRepository.delete(id);
-      return `Гид ${activity.name} удален успешно`;
+    if (!guide) {
+      throw new NotFoundException('Гида с таким именем не существует');
     }
-    throw new NotFoundException('Такой гид уже зарегистрирован');
+    await this.guidesRepository.delete(id);
+    return `Гид ${guide.name} удален успешно`;
   }
 }

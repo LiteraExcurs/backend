@@ -52,7 +52,7 @@ export class FilesService {
         name: file.originalname,
         type: entityType,
         slug: randomName,
-        url: `/static/${entityType}/${randomName}`,
+        url: `/static/${entityType}/${randomName}.webp`,
       });
     }
     return res;

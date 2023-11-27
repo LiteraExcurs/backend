@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ActivityModule } from './activity/activity.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Activity } from './activity/entities/activity.entity';
@@ -10,6 +8,8 @@ import { File } from './files/entities/file.entity';
 import { Guide } from './guides/entities/guide.entity';
 import { User } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -27,8 +27,10 @@ import { UserModule } from './user/user.module';
     FilesModule,
     GuidesModule,
     UserModule,
+    AuthModule,
+    ConfigModule.forRoot({ isGlobal: true }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
