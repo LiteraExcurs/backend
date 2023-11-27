@@ -11,8 +11,8 @@ export class AuthService {
     private readonly userService: UserService,
   ) {}
 
-  async validateUser(email: string, password: string) {
-    const user = await this.userService.findByUsername(email);
+  async validateUser(login: string, password: string) {
+    const user = await this.userService.findByUsername(login);
     if (!user) {
       throw new UnauthorizedException('Такого пользователя не существует');
     }
