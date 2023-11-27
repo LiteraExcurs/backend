@@ -5,7 +5,14 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IsString, Length, IsNotEmpty, IsUrl, IsAlpha } from 'class-validator';
+import {
+  IsString,
+  Length,
+  IsNotEmpty,
+  IsUrl,
+  IsAlpha,
+  IsOptional,
+} from 'class-validator';
 
 @Entity()
 export class File {
@@ -18,19 +25,25 @@ export class File {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column()
-  @Length(1, 10)
+  @Column('varchar', { length: 1000 })
+  @Length(1, 1000)
   @IsString()
-  @IsAlpha()
   @IsNotEmpty()
   name: string;
 
-  @Column()
+  @Column('varchar', { length: 500 })
   @Length(1, 500)
   @IsNotEmpty()
-  description: string;
+  @IsAlpha()
+  type: string;
 
-  @Column()
+  @Column('varchar', { length: 500 })
+  @Length(1, 500)
+  @IsOptional()
+  @IsAlpha()
+  slug: string;
+
+  @Column('varchar', { length: 2000 })
   @IsNotEmpty()
   @IsUrl()
   url: string;

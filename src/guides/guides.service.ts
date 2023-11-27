@@ -1,26 +1,62 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateGuideDto } from './dto/create-guide.dto';
 import { UpdateGuideDto } from './dto/update-guide.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Guide } from './entities/guide.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class GuidesService {
-  create(createGuideDto: CreateGuideDto) {
-    return 'This action adds a new guide';
+  constructor(
+    @InjectRepository(Guide)
+    private guidesRepository: Repository<Guide>,
+  ) {}
+  async create(query: CreateGuideDto) {
+    const { name } = query;
+    const guide = await this.guidesRepository.findOne({
+      where: { name },
+    });
+    if (!guide) {
+      return await this.guidesRepository.save(query);
+    }
+    throw new BadRequestException('Гид с таким именем уже есть');
   }
 
-  findAll() {
-    return `This action returns all guides`;
+  async findAll() {
+    return await this.guidesRepository.find({
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        image: true,
+        isActive: true,
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} guide`;
+  async update(id: number, query: UpdateGuideDto) {
+    const guide = await this.guidesRepository.findOne({
+      where: { id },
+    });
+    if (!guide) {
+      throw new NotFoundException('Гида с таким именем не существует');
+    }
+    await this.guidesRepository.update(id, query);
+    return `Гид ${guide.name} обновлена успешно`;
   }
 
-  update(id: number, updateGuideDto: UpdateGuideDto) {
-    return `This action updates a #${id} guide`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} guide`;
+  async remove(id: number) {
+    const guide = await this.guidesRepository.findOne({
+      where: { id },
+    });
+    if (!guide) {
+      throw new NotFoundException('Гида с таким именем не существует');
+    }
+    await this.guidesRepository.delete(id);
+    return `Гид ${guide.name} удален успешно`;
   }
 }
