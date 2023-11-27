@@ -11,7 +11,6 @@ import {
   IsNotEmpty,
   IsUrl,
   IsBoolean,
-  IsOptional,
   Matches,
   IsLowercase,
 } from 'class-validator';

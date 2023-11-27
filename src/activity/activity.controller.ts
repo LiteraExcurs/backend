@@ -5,14 +5,15 @@ import {
   Body,
   Patch,
   Param,
-  Delete, UseGuards
-} from "@nestjs/common";
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { ActivityService } from './activity.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { Activity } from './entities/activity.entity';
-import { JwtAuthGuard } from "../auth/guards/jwt.guard";
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 
 @Controller('activity')
 @ApiTags('Activity')
@@ -28,7 +29,7 @@ export class ActivityController {
   findAll(): Promise<Array<Activity>> {
     return this.activityService.findAll();
   }
-  @UseGuards(JwtAuthGuard)
+
   @Get(':slug')
   findOne(@Param('slug') slug: string): Promise<Activity> {
     return this.activityService.findOne(slug);

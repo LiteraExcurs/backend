@@ -9,7 +9,6 @@ import { File } from './entities/file.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { randomId } from './files.utils';
-import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class FilesService {
@@ -53,7 +52,7 @@ export class FilesService {
         name: file.originalname,
         type: entityType,
         slug: randomName,
-        url: `/static/${entityType}/${randomName}`,
+        url: `/static/${entityType}/${randomName}.webp`,
       });
     }
     return res;
