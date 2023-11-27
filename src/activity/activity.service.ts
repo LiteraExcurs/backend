@@ -13,23 +13,22 @@ import { Repository } from 'typeorm';
 export class ActivityService {
   constructor(
     @InjectRepository(Activity)
-    private activitesRepository: Repository<Activity>,
+    private activitiesRepository: Repository<Activity>,
   ) {}
 
   async create(query: CreateActivityDto) {
     const { slug } = query;
-    const activity = await this.activitesRepository.findOne({
+    const activity = await this.activitiesRepository.findOne({
       where: { slug },
     });
     if (activity) {
       throw new BadRequestException('Такая активность уже есть');
     }
-    const newActivity = await this.activitesRepository.save(query);
-    return newActivity;
+    return await this.activitiesRepository.save(query);
   }
 
   async findAll() {
-    return await this.activitesRepository.find({
+    return await this.activitiesRepository.find({
       select: {
         id: true,
         name: true,
@@ -43,7 +42,7 @@ export class ActivityService {
   }
 
   async findOne(slug: string) {
-    const activity = await this.activitesRepository.findOne({
+    const activity = await this.activitiesRepository.findOne({
       where: { slug },
     });
     if (activity) {
@@ -53,24 +52,24 @@ export class ActivityService {
   }
 
   async update(slug: string, updateActivityDto: UpdateActivityDto) {
-    const activity = await this.activitesRepository.findOne({
+    const activity = await this.activitiesRepository.findOne({
       where: { slug },
     });
     if (activity) {
       const { id } = activity;
-      await this.activitesRepository.update(id, updateActivityDto);
+      await this.activitiesRepository.update(id, updateActivityDto);
       return `Активность ${activity.name} обновлена успешно`;
     }
     throw new NotFoundException('Такое мероприятие не найдено');
   }
 
   async remove(slug: string) {
-    const activity = await this.activitesRepository.findOne({
+    const activity = await this.activitiesRepository.findOne({
       where: { slug },
     });
     if (activity) {
       const { id } = activity;
-      await this.activitesRepository.delete(id);
+      await this.activitiesRepository.delete(id);
       return `Активность ${activity.name} удалена успешно`;
     }
     throw new NotFoundException('Такое мероприятие не найдено');

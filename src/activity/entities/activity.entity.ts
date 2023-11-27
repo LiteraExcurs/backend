@@ -36,7 +36,7 @@ export class Activity {
   //Добавить enum после уточнения типа активностей у заказчика
   type: string;
 
-  @Column()
+  @Column('varchar', { length: 500 })
   @IsString()
   location: string;
 
