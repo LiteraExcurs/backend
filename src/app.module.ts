@@ -10,9 +10,10 @@ import { File } from './files/entities/file.entity';
 import { Guide } from './guides/entities/guide.entity';
 import { User } from './user/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
-import { UserModule } from "./user/user.module";
-import { ConfigModule } from "@nestjs/config";
-
+import { UserModule } from './user/user.module';
+import { ConfigModule } from '@nestjs/config';
+import { Event } from './event/entities/event.entity';
+import { Booking } from './booking/entities/booking.entity';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { ConfigModule } from "@nestjs/config";
       username: 'postgres',
       password: 'student',
       database: 'literaex',
-      entities: [Activity, File, Guide, User],
+      entities: [Activity, File, Guide, User, Event, Booking],
       synchronize: true,
     }),
     FilesModule,

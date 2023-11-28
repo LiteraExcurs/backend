@@ -64,6 +64,7 @@ export class Event {
   @Column('int')
   @IsNumber()
   booked: number;
+
   @Column('int')
   @IsNumber()
   guide: number;
