@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import {
   IsBoolean,
-  IsDate,
+  IsDateString,
   IsLowercase,
   IsNotEmpty,
   IsNumber,
@@ -15,6 +15,7 @@ import {
   Length,
   Matches,
 } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class Event {
@@ -33,7 +34,7 @@ export class Event {
 
   @Column('varchar', { length: 100 })
   @IsString()
-  nameOfPart: string;
+  name: string;
 
   @Column('varchar', { length: 50, unique: true })
   @Length(1, 50)
@@ -49,8 +50,8 @@ export class Event {
   @IsBoolean()
   isActive: boolean;
 
-  @Column('date')
-  @IsDate()
+  @Column('varchar')
+  @IsDateString()
   date: Date;
 
   @Column('int')

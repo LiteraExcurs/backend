@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { ActivityModule } from './activity/activity.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Activity } from './activity/entities/activity.entity';
+import { Booking } from './booking/entities/booking.entity';
+import { Event } from './event/entities/event.entity';
 import { FilesModule } from './files/files.module';
 import { GuidesModule } from './guides/guides.module';
 import { EventModule } from './event/event.module';
@@ -12,8 +14,6 @@ import { User } from './user/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
-import { Event } from './event/entities/event.entity';
-import { Booking } from './booking/entities/booking.entity';
 
 @Module({
   imports: [

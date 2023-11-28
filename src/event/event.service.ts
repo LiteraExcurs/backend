@@ -12,22 +12,17 @@ export class EventService {
     private eventsRepository: Repository<Event>,
   ) {}
   async create(query: CreateEventDto) {
-    const { slug } = query;
-    const event = await this.eventsRepository.findOne({
-      where: { slug },
+    const { name } = query;
+    const guide = await this.eventsRepository.findOne({
+      where: { name },
     });
-    if (!event) {
+    if (!guide) {
       return await this.eventsRepository.save(query);
     }
-    throw new BadRequestException('Такое событие уже есть');
+    throw new BadRequestException('Гид с таким именем уже есть');
   }
-
   findAll() {
     return `This action returns all event`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} event`;
   }
 
   update(id: number, updateEventDto: UpdateEventDto) {

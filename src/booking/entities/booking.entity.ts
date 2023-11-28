@@ -18,7 +18,7 @@ export class Booking {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column('varchar', { length: 11 })
+  @Column('varchar', { length: 12 })
   @IsPhoneNumber()
   phoneNumber: string;
 
