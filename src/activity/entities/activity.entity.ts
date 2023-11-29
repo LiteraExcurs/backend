@@ -14,6 +14,7 @@ import {
   Matches,
   IsLowercase,
 } from 'class-validator';
+import { Seasons } from '../../event/types/seasons.types';
 
 @Entity()
 export class Activity {
@@ -30,6 +31,14 @@ export class Activity {
   @Length(1, 250)
   @IsString()
   name: string;
+
+  @Column('varchar', { length: 200 })
+  @IsString()
+  subtitle: string;
+
+  @Column('varchar', { length: 20 })
+  @IsString()
+  season: Seasons;
 
   @Column('varchar', { length: 250 })
   @IsString()

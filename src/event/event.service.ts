@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -21,15 +25,47 @@ export class EventService {
     }
     throw new BadRequestException('Гид с таким именем уже есть');
   }
-  findAll() {
-    return `This action returns all event`;
+  async findAll() {
+    return await this.eventsRepository.find({
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        isActive: true,
+      },
+    });
+  }
+  async findOne(slug: string) {
+    const event = await this.eventsRepository.findOne({
+      where: { slug },
+    });
+    if (!event) {
+      throw new NotFoundException('Такое мероприятие не найдено');
+    }
+    return event;
   }
 
-  update(id: number, updateEventDto: UpdateEventDto) {
-    return `This action updates a #${id} event`;
+  async update(slug: string, updateActivityDto: UpdateEventDto) {
+    const event = await this.eventsRepository.findOne({
+      where: { slug },
+    });
+    if (!event) {
+      throw new NotFoundException('Такое мероприятие не найдено');
+    }
+    const { id } = event;
+    await this.eventsRepository.update(id, updateActivityDto);
+    return `Активность ${event.name} обновлена успешно`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} event`;
+  async remove(slug: string) {
+    const event = await this.eventsRepository.findOne({
+      where: { slug },
+    });
+    if (!event) {
+      throw new NotFoundException('Такое мероприятие не найдено');
+    }
+    const { id } = event;
+    await this.eventsRepository.delete(id);
+    return `Событие ${event.name} удалена успешно`;
   }
 }

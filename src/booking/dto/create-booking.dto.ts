@@ -1,7 +1,16 @@
-import { IsDateString, IsEmail, IsNumber, IsPhoneNumber } from "class-validator";
+import {
+  IsDateString,
+  IsEmail,
+  IsNumber,
+  IsPhoneNumber,
+  IsString,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateBookingDto {
+  @IsString()
+  name: string;
+
   @IsPhoneNumber()
   @ApiProperty({ default: '+79876543210' })
   phoneNumber: string;
@@ -19,7 +28,7 @@ export class CreateBookingDto {
   price: number;
 
   @IsDateString()
-  @ApiProperty({ default: new Date()})
+  @ApiProperty({ default: new Date() })
   date: Date;
 
   @IsNumber()

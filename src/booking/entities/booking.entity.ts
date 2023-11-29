@@ -5,7 +5,13 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IsDate, IsEmail, IsNumber, IsPhoneNumber } from 'class-validator';
+import {
+  IsDate,
+  IsEmail,
+  IsNumber,
+  IsPhoneNumber,
+  IsString,
+} from 'class-validator';
 
 @Entity()
 export class Booking {
@@ -17,6 +23,10 @@ export class Booking {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column('varchar', { length: 100 })
+  @IsString()
+  name: string;
 
   @Column('varchar', { length: 12 })
   @IsPhoneNumber()

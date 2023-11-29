@@ -15,7 +15,7 @@ import {
   Length,
   Matches,
 } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { Seasons } from '../types/seasons.types';
 
 @Entity()
 export class Event {
@@ -36,6 +36,10 @@ export class Event {
   @IsString()
   name: string;
 
+  @Column('varchar', { length: 200 })
+  @IsString()
+  subtitle: string;
+
   @Column('varchar', { length: 50, unique: true })
   @Length(1, 50)
   @IsLowercase()
@@ -53,6 +57,10 @@ export class Event {
   @Column('varchar')
   @IsDateString()
   date: Date;
+
+  @Column()
+  @IsString()
+  season: Seasons;
 
   @Column('int')
   @IsNumber()
@@ -81,4 +89,8 @@ export class Event {
   @Column('int')
   @IsNumber()
   price: number;
+
+  @Column('varchar', { length: 4000 })
+  @Length(1, 4000)
+  avalibleDates: string;
 }

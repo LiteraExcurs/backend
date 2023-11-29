@@ -32,14 +32,14 @@ export class EventController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEventDto: UpdateEventDto) {
-    return this.eventService.update(+id, updateEventDto);
+  @Patch(':slug')
+  update(@Param('slug') slug: string, @Body() updateEventDto: UpdateEventDto) {
+    return this.eventService.update(slug, updateEventDto);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.eventService.remove(+id);
+  @Delete(':slug')
+  remove(@Param('slug') slug: string) {
+    return this.eventService.remove(slug);
   }
 }

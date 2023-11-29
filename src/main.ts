@@ -11,7 +11,7 @@ async function bootstrap() {
   });
   const config = new DocumentBuilder()
     .setTitle('Litera excurs')
-    .setDescription('The cats API description')
+    .setDescription('Litera excurs')
     .setVersion('1.0')
     .addTag('litera')
     .addBearerAuth()
