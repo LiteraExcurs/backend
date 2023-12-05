@@ -20,6 +20,10 @@ export class CreateEventDto {
   name: string;
 
   @ApiProperty({ default: 'example' })
+  @IsString()
+  subtitle: string;
+
+  @ApiProperty({ default: 'example' })
   @Length(1, 50)
   @IsLowercase()
   @Matches('[a-zA-ZåäöÅÄÖs-]')
@@ -46,10 +50,6 @@ export class CreateEventDto {
   @IsNumber()
   capacity: number;
 
-  @ApiProperty({ default: 2 })
-  @IsNumber()
-  booked: number;
-
   @ApiProperty({ default: 1 })
   @IsNumber()
   guide: number;
@@ -65,4 +65,7 @@ export class CreateEventDto {
   @ApiProperty({ default: 500 })
   @IsNumber()
   price: number;
+
+  @Length(1, 4000)
+  availableDates: Array<string>;
 }

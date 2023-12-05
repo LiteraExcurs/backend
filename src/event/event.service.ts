@@ -35,9 +35,9 @@ export class EventService {
       },
     });
   }
-  async findOne(slug: string) {
+  async findById(id: number) {
     const event = await this.eventsRepository.findOne({
-      where: { slug },
+      where: { id },
     });
     if (!event) {
       throw new NotFoundException('Такое мероприятие не найдено');
@@ -45,7 +45,7 @@ export class EventService {
     return event;
   }
 
-  async update(slug: string, updateActivityDto: UpdateEventDto) {
+  async update(slug: string, updateEventDto: UpdateEventDto) {
     const event = await this.eventsRepository.findOne({
       where: { slug },
     });
@@ -53,7 +53,7 @@ export class EventService {
       throw new NotFoundException('Такое мероприятие не найдено');
     }
     const { id } = event;
-    await this.eventsRepository.update(id, updateActivityDto);
+    await this.eventsRepository.update(id, updateEventDto);
     return `Активность ${event.name} обновлена успешно`;
   }
 

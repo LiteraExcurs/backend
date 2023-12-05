@@ -14,6 +14,7 @@ import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { BookingQuery } from './types/booking.types';
 
 @Controller('booking')
 @ApiTags('Booking')
@@ -21,8 +22,8 @@ export class BookingController {
   constructor(private readonly bookingService: BookingService) {}
 
   @Post()
-  create(@Body() createBookingDto: CreateBookingDto) {
-    return this.bookingService.create(createBookingDto);
+  create(@Body() query: BookingQuery) {
+    return this.bookingService.create(query);
   }
 
   @UseGuards(JwtAuthGuard)

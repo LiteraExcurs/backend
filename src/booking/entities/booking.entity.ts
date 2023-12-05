@@ -2,6 +2,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -12,6 +14,7 @@ import {
   IsPhoneNumber,
   IsString,
 } from 'class-validator';
+import { Event } from '../../event/entities/event.entity';
 
 @Entity()
 export class Booking {
@@ -40,15 +43,15 @@ export class Booking {
   @IsNumber()
   visitors: number;
 
-  @Column('int')
-  @IsNumber()
-  price: number;
-
   @Column('date')
   @IsDate()
   date: Date;
 
-  @Column('int')
-  @IsNumber()
-  activity: number;
+  @ManyToOne(() => Event, (event) => event.id)
+  activity: Event;
+
+  //Вот тут в базу записывается ID, не не понимаю почему...
+  @ManyToOne(() => Event, (event) => event.price)
+  @JoinColumn()
+  price: Event;
 }

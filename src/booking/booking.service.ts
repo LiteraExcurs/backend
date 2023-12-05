@@ -1,20 +1,28 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateBookingDto } from './dto/create-booking.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Booking } from './entities/booking.entity';
-
-import { UpdateEventDto } from '../event/dto/update-event.dto';
+import { EventService } from '../event/event.service';
+import { BookingQuery } from './types/booking.types';
+import { UpdateBookingDto } from './dto/update-booking.dto';
 
 @Injectable()
 export class BookingService {
   constructor(
     @InjectRepository(Booking)
     private bookingRepository: Repository<Booking>,
+    private eventService: EventService,
   ) {}
-  async create(query: CreateBookingDto) {
-    await this.bookingRepository.save(query);
-    return 'Вы успешно записались на экскурсию';
+  async create(query: BookingQuery) {
+    const event = await this.eventService.findById(query.activityId);
+    console.log(event);
+    await this.bookingRepository.save({
+      ...query,
+      activity: event,
+      price: event,
+    });
+    const { name } = event;
+    return `Вы успешно записались на экскурсию ${name}`;
   }
   async findAll() {
     return await this.bookingRepository.find({
@@ -37,14 +45,14 @@ export class BookingService {
     return event;
   }
 
-  async update(id: number, updateActivityDto: UpdateEventDto) {
+  async update(id: number, updateBookingDto: UpdateBookingDto) {
     const booking = await this.bookingRepository.findOne({
       where: { id },
     });
     if (!booking) {
       throw new NotFoundException('Такая запись не найдена');
     }
-    await this.bookingRepository.update(id, updateActivityDto);
+    await this.bookingRepository.update(id, updateBookingDto);
     return `Запись ${booking.name} обновлена успешно`;
   }
 

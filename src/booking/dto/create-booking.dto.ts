@@ -23,15 +23,7 @@ export class CreateBookingDto {
   @ApiProperty({ default: 5 })
   visitors: number;
 
-  @IsNumber()
-  @ApiProperty({ default: 500 })
-  price: number;
-
   @IsDateString()
   @ApiProperty({ default: new Date() })
   date: Date;
-
-  @IsNumber()
-  @ApiProperty({ default: 1 })
-  activity: number;
 }

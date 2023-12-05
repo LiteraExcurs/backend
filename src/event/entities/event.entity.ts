@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -16,6 +17,7 @@ import {
   Matches,
 } from 'class-validator';
 import { Seasons } from '../types/seasons.types';
+import { Booking } from '../../booking/entities/booking.entity';
 
 @Entity()
 export class Event {
@@ -58,10 +60,6 @@ export class Event {
   @IsDateString()
   date: Date;
 
-  @Column()
-  @IsString()
-  season: Seasons;
-
   @Column('int')
   @IsNumber()
   durationTime: number;
@@ -70,9 +68,9 @@ export class Event {
   @IsNumber()
   capacity: number;
 
-  @Column('int')
-  @IsNumber()
-  booked: number;
+  //В базу значение не записыватеся
+  @OneToMany(() => Booking, (booking) => booking.date)
+  booked: Booking[];
 
   @Column('int')
   @IsNumber()
@@ -92,5 +90,5 @@ export class Event {
 
   @Column('varchar', { length: 4000 })
   @Length(1, 4000)
-  avalibleDates: string;
+  availableDates: Array<string>;
 }
