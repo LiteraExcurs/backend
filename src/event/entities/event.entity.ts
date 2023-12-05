@@ -69,7 +69,7 @@ export class Event {
   capacity: number;
 
   //В базу значение не записыватеся
-  @OneToMany(() => Booking, (booking) => booking.date)
+  @OneToMany(() => Booking, (booking) => booking.activity)
   booked: Booking[];
 
   @Column('int')

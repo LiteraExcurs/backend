@@ -32,6 +32,12 @@ export class EventController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.eventService.findById(+id);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Patch(':slug')
   update(@Param('slug') slug: string, @Body() updateEventDto: UpdateEventDto) {
     return this.eventService.update(slug, updateEventDto);

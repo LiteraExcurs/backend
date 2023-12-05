@@ -19,7 +19,7 @@ export class BookingService {
     await this.bookingRepository.save({
       ...query,
       activity: event,
-      price: event,
+      price: 500, // цену нужно брать из сущности event
     });
     const { name } = event;
     return `Вы успешно записались на экскурсию ${name}`;

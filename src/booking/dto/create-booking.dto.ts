@@ -26,4 +26,8 @@ export class CreateBookingDto {
   @IsDateString()
   @ApiProperty({ default: new Date() })
   date: Date;
+
+  @IsNumber()
+  @ApiProperty({ default: 1 })
+  activityId: number;
 }

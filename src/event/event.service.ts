@@ -17,14 +17,20 @@ export class EventService {
   ) {}
   async create(query: CreateEventDto) {
     const { name } = query;
-    const guide = await this.eventsRepository.findOne({
+    const event = await this.eventsRepository.findOne({
       where: { name },
     });
-    if (!guide) {
+
+    if (!event) {
+      // перед тем, как добавлять активность, нужно найти гида
+      // еще одна бага - если slug не уникальный, то возникает ошибка
+      // которую нигде не отлавливают
       return await this.eventsRepository.save(query);
     }
-    throw new BadRequestException('Гид с таким именем уже есть');
+
+    throw new BadRequestException('Событие с таким названием уже существует.');
   }
+
   async findAll() {
     return await this.eventsRepository.find({
       select: {
@@ -38,6 +44,9 @@ export class EventService {
   async findById(id: number) {
     const event = await this.eventsRepository.findOne({
       where: { id },
+      relations: {
+        booked: true,
+      },
     });
     if (!event) {
       throw new NotFoundException('Такое мероприятие не найдено');
