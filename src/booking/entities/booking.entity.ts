@@ -47,11 +47,9 @@ export class Booking {
   @IsDate()
   date: Date;
 
-  @ManyToOne(() => Event, (event) => event.id)
+  @ManyToOne(() => Event, (event) => event.booked)
   activity: Event;
 
-  //Вот тут в базу записывается ID, не не понимаю почему...
-  @ManyToOne(() => Event, (event) => event.price)
-  @JoinColumn()
-  price: Event;
+  @Column()
+  price: number;
 }

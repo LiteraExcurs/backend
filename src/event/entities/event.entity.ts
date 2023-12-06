@@ -2,10 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn, ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+  UpdateDateColumn
+} from "typeorm";
 import {
   IsBoolean,
   IsDateString,
@@ -16,7 +17,6 @@ import {
   Length,
   Matches,
 } from 'class-validator';
-import { Seasons } from '../types/seasons.types';
 import { Booking } from '../../booking/entities/booking.entity';
 
 @Entity()
@@ -68,10 +68,6 @@ export class Event {
   @IsNumber()
   capacity: number;
 
-  //В базу значение не записыватеся
-  @OneToMany(() => Booking, (booking) => booking.date)
-  booked: Booking[];
-
   @Column('int')
   @IsNumber()
   guide: number;
@@ -91,4 +87,7 @@ export class Event {
   @Column('varchar', { length: 4000 })
   @Length(1, 4000)
   availableDates: Array<string>;
+
+  @OneToMany(() => Booking, (booking) => booking.activity)
+  booked: Array<Booking>;
 }

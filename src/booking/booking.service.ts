@@ -15,11 +15,10 @@ export class BookingService {
   ) {}
   async create(query: BookingQuery) {
     const event = await this.eventService.findById(query.activityId);
-    console.log(event);
     await this.bookingRepository.save({
       ...query,
       activity: event,
-      price: event,
+      price: event.price,
     });
     const { name } = event;
     return `Вы успешно записались на экскурсию ${name}`;

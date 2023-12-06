@@ -21,9 +21,10 @@ export class EventService {
       where: { name },
     });
     if (!guide) {
-      return await this.eventsRepository.save(query);
+      const newEvent = this.eventsRepository.create({ ...query, booked: [] });
+      return await this.eventsRepository.save(newEvent);
     }
-    throw new BadRequestException('Гид с таким именем уже есть');
+    throw new BadRequestException('Ивент с таким именем уже существует');
   }
   async findAll() {
     return await this.eventsRepository.find({
@@ -38,6 +39,9 @@ export class EventService {
   async findById(id: number) {
     const event = await this.eventsRepository.findOne({
       where: { id },
+      relations: {
+        booked: true,
+      },
     });
     if (!event) {
       throw new NotFoundException('Такое мероприятие не найдено');
