@@ -1,8 +1,7 @@
 import {
   Column,
   CreateDateColumn,
-  Entity,
-  JoinColumn, ManyToOne,
+  Entity, ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
@@ -18,6 +17,7 @@ import {
   Matches,
 } from 'class-validator';
 import { Booking } from '../../booking/entities/booking.entity';
+import { Activity } from "../../activity/entities/activity.entity";
 
 @Entity()
 export class Event {
@@ -49,8 +49,8 @@ export class Event {
   @IsNotEmpty()
   slug: string;
 
-  @Column('int')
-  activityId: number;
+  @ManyToOne(() => Activity, (activity) => activity.events)
+  activity: Activity;
 
   @Column('boolean', { default: true })
   @IsBoolean()
@@ -88,6 +88,6 @@ export class Event {
   @Length(1, 4000)
   availableDates: Array<string>;
 
-  @OneToMany(() => Booking, (booking) => booking.activity)
+  @OneToMany(() => Booking, (booking) => booking.event)
   booked: Array<Booking>;
 }

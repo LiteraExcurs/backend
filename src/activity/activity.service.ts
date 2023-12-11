@@ -41,6 +41,19 @@ export class ActivityService {
     });
   }
 
+  async findById(id: number) {
+    const activity = await this.activitiesRepository.findOne({
+      where: { id },
+      relations: {
+        events: true,
+      },
+    });
+    if (!activity) {
+      throw new NotFoundException('Такое мероприятие не найдено');
+    }
+    return activity;
+  }
+
   async findOne(slug: string) {
     const activity = await this.activitiesRepository.findOne({
       where: { slug },

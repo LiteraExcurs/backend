@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Booking } from './entities/booking.entity';
 import { EventService } from '../event/event.service';
-import { BookingQuery } from './types/booking.types';
 import { UpdateBookingDto } from './dto/update-booking.dto';
+import { CreateBookingDto } from './dto/create-booking.dto';
 
 @Injectable()
 export class BookingService {
@@ -13,28 +13,30 @@ export class BookingService {
     private bookingRepository: Repository<Booking>,
     private eventService: EventService,
   ) {}
-  async create(query: BookingQuery) {
-    const event = await this.eventService.findById(query.activityId);
+  async create(query: CreateBookingDto) {
+    const event = await this.eventService.findById(query.eventId);
     await this.bookingRepository.save({
       ...query,
-      activity: event,
+      event: event,
       price: event.price,
     });
     const { name } = event;
     return `Вы успешно записались на экскурсию ${name}`;
   }
   async findAll() {
-    return await this.bookingRepository.find({
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        visitors: true,
-        phoneNumber: true,
-      },
-    });
+    return await this.bookingRepository.find();
   }
   async findOne(id: number) {
+    const event = await this.bookingRepository.findOne({
+      where: { id },
+    });
+    if (!event) {
+      throw new NotFoundException('Такой записи нет');
+    }
+    return event;
+  }
+
+  async findByEventId(id: number) {
     const event = await this.bookingRepository.findOne({
       where: { id },
     });

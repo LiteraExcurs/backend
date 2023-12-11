@@ -48,7 +48,7 @@ export class Booking {
   date: Date;
 
   @ManyToOne(() => Event, (event) => event.booked)
-  activity: Event;
+  event: Event;
 
   @Column()
   price: number;

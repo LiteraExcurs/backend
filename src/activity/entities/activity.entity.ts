@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -15,6 +16,8 @@ import {
   IsLowercase,
 } from 'class-validator';
 import { Seasons } from '../../event/types/seasons.types';
+import { Booking } from '../../booking/entities/booking.entity';
+import { Event } from '../../event/entities/event.entity';
 
 @Entity()
 export class Activity {
@@ -36,7 +39,7 @@ export class Activity {
   @IsString()
   subtitle: string;
 
-  @Column('varchar', { length: 20 })
+  @Column('varchar', { length: 20, default: 'no_season' })
   @IsString()
   season: Seasons;
 
@@ -75,4 +78,7 @@ export class Activity {
   @Column('boolean', { default: false })
   @IsBoolean()
   isDeleted: boolean;
+
+  @OneToMany(() => Event, (event) => event.activity)
+  events: Array<Booking>;
 }

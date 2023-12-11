@@ -17,10 +17,10 @@ export class EventService {
   ) {}
   async create(query: CreateEventDto) {
     const { name } = query;
-    const guide = await this.eventsRepository.findOne({
+    const event = await this.eventsRepository.findOne({
       where: { name },
     });
-    if (!guide) {
+    if (!event) {
       const newEvent = this.eventsRepository.create({ ...query, booked: [] });
       return await this.eventsRepository.save(newEvent);
     }
