@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { EventService } from './event.service';
 import { CreateEventDto } from './dto/create-event.dto';
@@ -27,8 +28,8 @@ export class EventController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.eventService.findById(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.eventService.findById(id);
   }
 
   @UseGuards(JwtAuthGuard)
