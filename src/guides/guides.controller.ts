@@ -32,6 +32,12 @@ export class GuidesController {
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
+  findById(@Param('id') id: string) {
+    return this.guidesService.findById(+id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id')
   update(@Param('id') id: string, @Body() updateGuideDto: UpdateGuideDto) {
     return this.guidesService.update(+id, updateGuideDto);
   }

@@ -49,7 +49,7 @@ export class ActivityService {
       },
     });
     if (!activity) {
-      throw new NotFoundException('Такое мероприятие не найдено');
+      throw new NotFoundException(`Активность с таким id не найдена`);
     }
     return activity;
   }

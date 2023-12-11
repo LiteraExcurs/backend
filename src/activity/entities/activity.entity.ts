@@ -81,4 +81,7 @@ export class Activity {
 
   @OneToMany(() => Event, (event) => event.activity)
   events: Array<Booking>;
+
+  @Length(1, 4000)
+  availableDates: Array<string>;
 }

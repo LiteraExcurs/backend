@@ -1,11 +1,12 @@
 import {
   Column,
   CreateDateColumn,
-  Entity, ManyToOne,
+  Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
-} from "typeorm";
+  UpdateDateColumn,
+} from 'typeorm';
 import {
   IsBoolean,
   IsDateString,
@@ -17,7 +18,8 @@ import {
   Matches,
 } from 'class-validator';
 import { Booking } from '../../booking/entities/booking.entity';
-import { Activity } from "../../activity/entities/activity.entity";
+import { Activity } from '../../activity/entities/activity.entity';
+import { Guide } from '../../guides/entities/guide.entity';
 
 @Entity()
 export class Event {
@@ -30,7 +32,7 @@ export class Event {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column('int')
+  @Column('int', { default: 1 })
   @IsNumber()
   part: number;
 
@@ -42,15 +44,12 @@ export class Event {
   @IsString()
   subtitle: string;
 
-  @Column('varchar', { length: 50, unique: true })
+  @Column('varchar', { length: 50 })
   @Length(1, 50)
   @IsLowercase()
   @Matches('[a-zA-ZåäöÅÄÖs-]')
   @IsNotEmpty()
   slug: string;
-
-  @ManyToOne(() => Activity, (activity) => activity.events)
-  activity: Activity;
 
   @Column('boolean', { default: true })
   @IsBoolean()
@@ -60,19 +59,15 @@ export class Event {
   @IsDateString()
   date: Date;
 
-  @Column('int')
+  @Column('int', { default: 1 })
   @IsNumber()
   durationTime: number;
 
-  @Column('int')
+  @Column('int', { default: 10 })
   @IsNumber()
   capacity: number;
 
-  @Column('int')
-  @IsNumber()
-  guide: number;
-
-  @Column('int')
+  @Column('int', { default: 5 })
   @IsNumber()
   rating: number;
 
@@ -84,10 +79,12 @@ export class Event {
   @IsNumber()
   price: number;
 
-  @Column('varchar', { length: 4000 })
-  @Length(1, 4000)
-  availableDates: Array<string>;
-
   @OneToMany(() => Booking, (booking) => booking.event)
   booked: Array<Booking>;
+
+  @ManyToOne(() => Activity, (activity) => activity.events)
+  activity: Activity;
+
+  @ManyToOne(() => Guide, (guide) => guide.events)
+  guide: Guide;
 }

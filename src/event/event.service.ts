@@ -1,30 +1,40 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Event } from './entities/event.entity';
+import { ActivityService } from '../activity/activity.service';
+import { GuidesService } from '../guides/guides.service';
 
 @Injectable()
 export class EventService {
   constructor(
     @InjectRepository(Event)
     private eventsRepository: Repository<Event>,
+    private activityService: ActivityService,
+    private guidesService: GuidesService,
   ) {}
   async create(query: CreateEventDto) {
-    const { name } = query;
-    const event = await this.eventsRepository.findOne({
-      where: { name },
+    const { activityId, guideId } = query;
+    //Находим активность
+    const activity = await this.activityService.findById(activityId);
+    //Находим гида
+    const guide = await this.guidesService.findById(guideId);
+
+    const { name, slug, description, subtitle } = activity;
+
+    const newEvent = this.eventsRepository.create({
+      ...query,
+      name: name,
+      slug: slug,
+      description: description,
+      subtitle: subtitle,
+      activity: activity,
+      guide: guide,
+      booked: [],
     });
-    if (!event) {
-      const newEvent = this.eventsRepository.create({ ...query, booked: [] });
-      return await this.eventsRepository.save(newEvent);
-    }
-    throw new BadRequestException('Ивент с таким именем уже существует');
+    return await this.eventsRepository.save(newEvent);
   }
   async findAll() {
     return await this.eventsRepository.find({
