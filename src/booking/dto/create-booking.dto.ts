@@ -25,8 +25,8 @@ export class CreateBookingDto {
   email: string;
 
   @IsNumber()
-  @Min(0)
   @IsOptional()
+  @Min(0)
   @ApiProperty({ default: 5 })
   visitors: number;
 
