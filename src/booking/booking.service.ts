@@ -5,6 +5,8 @@ import { Booking } from './entities/booking.entity';
 import { EventService } from '../event/event.service';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { CreateBookingDto } from './dto/create-booking.dto';
+import { MailerService } from '@nestjs-modules/mailer';
+import { path } from 'app-root-path';
 
 @Injectable()
 export class BookingService {
@@ -12,6 +14,7 @@ export class BookingService {
     @InjectRepository(Booking)
     private bookingRepository: Repository<Booking>,
     private eventService: EventService,
+    private readonly mailerService: MailerService,
   ) {}
   async create(query: CreateBookingDto) {
     const event = await this.eventService.findById(query.eventId);
@@ -21,22 +24,20 @@ export class BookingService {
       price: event.price,
     });
     const { name } = event;
+    await this.mailerService.sendMail({
+      to: query.email, // list of receivers
+      subject: 'Подтверждение записи Literaexcurs', // Subject line
+      template: `${path}/src/templates/bookingEmail`,
+      context: {
+        name: event.name,
+      },
+    });
     return `Вы успешно записались на экскурсию ${name}`;
   }
   async findAll() {
     return await this.bookingRepository.find();
   }
   async findOne(id: number) {
-    const event = await this.bookingRepository.findOne({
-      where: { id },
-    });
-    if (!event) {
-      throw new NotFoundException('Такой записи нет');
-    }
-    return event;
-  }
-
-  async findByEventId(id: number) {
     const event = await this.bookingRepository.findOne({
       where: { id },
     });
