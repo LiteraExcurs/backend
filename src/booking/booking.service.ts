@@ -6,7 +6,6 @@ import { EventService } from '../event/event.service';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { MailerService } from '@nestjs-modules/mailer';
-import { path } from 'app-root-path';
 
 @Injectable()
 export class BookingService {
