@@ -6,8 +6,9 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards, ParseIntPipe
-} from "@nestjs/common";
+  UseGuards,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { GuidesService } from './guides.service';
 import { CreateGuideDto } from './dto/create-guide.dto';
 import { UpdateGuideDto } from './dto/update-guide.dto';
@@ -38,7 +39,10 @@ export class GuidesController {
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateGuideDto: UpdateGuideDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateGuideDto: UpdateGuideDto,
+  ) {
     return this.guidesService.update(id, updateGuideDto);
   }
   @UseGuards(JwtAuthGuard)

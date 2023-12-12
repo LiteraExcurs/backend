@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { join } from 'path';
 
 export const getMailerConfig = async (configService: ConfigService) => {
   return {
@@ -14,7 +15,7 @@ export const getMailerConfig = async (configService: ConfigService) => {
         from: `"No Reply" <${configService.get('MAIL_FROM')}>`,
       },
       template: {
-        dir: __dirname + 'src/templates/',
+        dir: join(__dirname, 'templates'),
         adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
         options: {
           strict: true,

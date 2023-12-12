@@ -27,10 +27,7 @@ export class BookingService {
     await this.mailerService.sendMail({
       to: query.email, // list of receivers
       subject: 'Подтверждение записи Literaexcurs', // Subject line
-      template: `${path}/src/templates/bookingEmail`,
-      context: {
-        name: event.name,
-      },
+      html: `<h1>Вы успешно записались на экскурсию ${name}</h1>`,
     });
     return `Вы успешно записались на экскурсию ${name}`;
   }
