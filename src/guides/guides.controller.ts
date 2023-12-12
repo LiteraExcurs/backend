@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { GuidesService } from './guides.service';
 import { CreateGuideDto } from './dto/create-guide.dto';
@@ -29,14 +30,24 @@ export class GuidesController {
   findAll() {
     return this.guidesService.findAll();
   }
+
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGuideDto: UpdateGuideDto) {
-    return this.guidesService.update(+id, updateGuideDto);
+  findById(@Param('id', ParseIntPipe) id: string) {
+    return this.guidesService.findById(+id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateGuideDto: UpdateGuideDto,
+  ) {
+    return this.guidesService.update(id, updateGuideDto);
   }
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.guidesService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.guidesService.remove(id);
   }
 }

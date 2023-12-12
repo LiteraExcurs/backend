@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -13,6 +14,7 @@ import {
   IsUrl,
   MinLength,
 } from 'class-validator';
+import { Event } from '../../event/entities/event.entity';
 
 @Entity()
 export class Guide {
@@ -60,4 +62,7 @@ export class Guide {
   @Column('int', { default: 0 })
   @MinLength(1)
   rating: number;
+
+  @OneToMany(() => Event, (event) => event.guide)
+  events: Array<Event>;
 }
