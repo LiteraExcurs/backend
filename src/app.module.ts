@@ -12,7 +12,7 @@ import { createDbConfig } from './configs/db.config';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { getMailerConfig } from './configs/mailer.config';
 import { TelegramModule } from './telegram/telegram.module';
-import { getTelegramConfig } from "./configs/telegram.comfig";
+import { getTelegramConfig } from './configs/telegram.comfig';
 
 @Module({
   imports: [

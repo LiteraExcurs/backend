@@ -23,6 +23,7 @@ export class BookingService {
       ...query,
       event: event,
       price: event.price,
+      date: event.date,
     });
     const { name, date } = event;
     await this.mailerService.sendMail({
