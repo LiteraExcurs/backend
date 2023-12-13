@@ -21,7 +21,11 @@ export class GuidesService {
       where: { name },
     });
     if (!guide) {
-      return await this.guidesRepository.save(query);
+      const newGuide = this.guidesRepository.create({
+        ...query,
+        events: [],
+      });
+      return await this.guidesRepository.save(newGuide);
     }
     throw new BadRequestException('Гид с таким именем уже есть');
   }
@@ -37,7 +41,15 @@ export class GuidesService {
       },
     });
   }
-
+  async findById(id: number) {
+    const guide = await this.guidesRepository.findOne({
+      where: { id },
+    });
+    if (!guide) {
+      throw new NotFoundException('Гида с таким именем не существует');
+    }
+    return guide;
+  }
   async update(id: number, query: UpdateGuideDto) {
     const guide = await this.guidesRepository.findOne({
       where: { id },

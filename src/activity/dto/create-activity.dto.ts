@@ -10,6 +10,7 @@ import {
   Matches,
   IsLowercase,
 } from 'class-validator';
+import { Seasons } from '../../event/types/seasons.types';
 
 export class CreateActivityDto {
   @Length(1, 250)
@@ -21,6 +22,14 @@ export class CreateActivityDto {
   @IsOptional()
   @ApiPropertyOptional()
   description: string;
+
+  @IsString()
+  @ApiProperty({ default: 'some_subtitle' })
+  subtitle: string;
+
+  @IsString()
+  @ApiProperty({ default: 'winter' })
+  season: Seasons;
 
   @IsString()
   @ApiProperty({ default: 'excursion' })
