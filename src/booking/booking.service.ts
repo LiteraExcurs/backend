@@ -6,6 +6,7 @@ import { EventService } from '../event/event.service';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { MailerService } from '@nestjs-modules/mailer';
+import { TelegramService } from '../telegram/telegram.service';
 
 @Injectable()
 export class BookingService {
@@ -14,6 +15,7 @@ export class BookingService {
     private bookingRepository: Repository<Booking>,
     private eventService: EventService,
     private readonly mailerService: MailerService,
+    private readonly telegramService: TelegramService,
   ) {}
   async create(query: CreateBookingDto) {
     const event = await this.eventService.findById(query.eventId);
@@ -22,12 +24,15 @@ export class BookingService {
       event: event,
       price: event.price,
     });
-    const { name } = event;
+    const { name, date } = event;
     await this.mailerService.sendMail({
       to: query.email, // list of receivers
       subject: 'Подтверждение записи Literaexcurs', // Subject line
       html: `<h1>Вы успешно записались на экскурсию ${name}</h1>`,
     });
+    await this.telegramService.sendMessage(
+      `Новый посетитель ${query.name} запилсася на экскурсию ${name} ${date}`,
+    );
     return `Вы успешно записались на экскурсию ${name}`;
   }
   async findAll() {
