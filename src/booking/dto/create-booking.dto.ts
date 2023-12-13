@@ -30,10 +30,6 @@ export class CreateBookingDto {
   @ApiProperty({ default: 5 })
   visitors: number;
 
-  @IsDateString()
-  @ApiProperty({ default: new Date() })
-  date: Date;
-
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty({ default: 1 })
