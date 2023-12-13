@@ -9,6 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { createDbConfig } from './configs/db.config';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { getMailerConfig } from './configs/mailer.config';
 
 @Module({
   imports: [
@@ -17,6 +19,11 @@ import { createDbConfig } from './configs/db.config';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: createDbConfig,
+    }),
+    MailerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: getMailerConfig,
     }),
     FilesModule,
     GuidesModule,
