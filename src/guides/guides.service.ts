@@ -31,15 +31,7 @@ export class GuidesService {
   }
 
   async findAll() {
-    return await this.guidesRepository.find({
-      select: {
-        id: true,
-        name: true,
-        description: true,
-        image: true,
-        isActive: true,
-      },
-    });
+    return await this.guidesRepository.find();
   }
   async findById(id: number) {
     const guide = await this.guidesRepository.findOne({

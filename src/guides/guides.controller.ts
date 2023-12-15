@@ -30,12 +30,16 @@ export class GuidesController {
   findAll() {
     return this.guidesService.findAll();
   }
-
-  @UseGuards(JwtAuthGuard)
-  @Patch(':id')
-  findById(@Param('id', ParseIntPipe) id: string) {
+  @Get(':id')
+  findOne(@Param('id', ParseIntPipe) id: string) {
     return this.guidesService.findById(+id);
   }
+
+  // @UseGuards(JwtAuthGuard)
+  // @Patch(':id')
+  // findById(@Param('id', ParseIntPipe) id: string) {
+  //   return this.guidesService.findById(+id);
+  // }
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')

@@ -37,7 +37,11 @@ export class BookingService {
     return `Вы успешно записались на экскурсию ${name}`;
   }
   async findAll() {
-    return await this.bookingRepository.find();
+    return await this.bookingRepository.find({
+      relations: {
+        event: true,
+      },
+    });
   }
   async findOne(id: number) {
     const event = await this.bookingRepository.findOne({
