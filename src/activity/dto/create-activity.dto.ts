@@ -36,7 +36,7 @@ export class CreateActivityDto {
   type: string;
 
   @IsString()
-  @ApiProperty({ default: 'moscow' })
+  @ApiProperty({ default: 'capital' })
   location: string;
 
   @Length(1, 50)

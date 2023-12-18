@@ -29,10 +29,22 @@ export class ActivityController {
   findAll(): Promise<Array<Activity>> {
     return this.activityService.findAll();
   }
-
+  @Get(':id')
+  findOneById(@Param('id') id: number): Promise<Activity> {
+    return this.activityService.findById(id);
+  }
   @Get(':slug')
   findOne(@Param('slug') slug: string): Promise<Activity> {
     return this.activityService.findOne(slug);
+  }
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id')
+  @ApiCreatedResponse({ description: `Активсность {slug} обновлена` })
+  updateById(
+    @Param('id') id: number,
+    @Body() updateActivityDto: UpdateActivityDto,
+  ): Promise<string> {
+    return this.activityService.updateById(id, updateActivityDto);
   }
   @UseGuards(JwtAuthGuard)
   @Patch(':slug')

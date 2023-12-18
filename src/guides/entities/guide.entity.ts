@@ -52,7 +52,7 @@ export class Guide {
   @IsOptional()
   isActive: boolean;
 
-  @Column('varchar', { length: 200, default: 'moscow' })
+  @Column('varchar', { length: 200, default: 'capital' })
   @Length(1, 500)
   location: string;
 

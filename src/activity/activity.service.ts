@@ -29,14 +29,8 @@ export class ActivityService {
 
   async findAll() {
     return await this.activitiesRepository.find({
-      select: {
-        id: true,
-        name: true,
-        image: true,
-        slug: true,
-        isActive: true,
-        location: true,
-        type: true,
+      relations: {
+        events: true,
       },
     });
   }
@@ -67,6 +61,17 @@ export class ActivityService {
   async update(slug: string, updateActivityDto: UpdateActivityDto) {
     const activity = await this.activitiesRepository.findOne({
       where: { slug },
+    });
+    if (activity) {
+      const { id } = activity;
+      await this.activitiesRepository.update(id, updateActivityDto);
+      return `Активность ${activity.name} обновлена успешно`;
+    }
+    throw new NotFoundException('Такое мероприятие не найдено');
+  }
+  async updateById(id: number, updateActivityDto: UpdateActivityDto) {
+    const activity = await this.activitiesRepository.findOne({
+      where: { id },
     });
     if (activity) {
       const { id } = activity;

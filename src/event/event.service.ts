@@ -38,11 +38,9 @@ export class EventService {
   }
   async findAll() {
     return await this.eventsRepository.find({
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        isActive: true,
+      relations: {
+        booked: true,
+        guide: true,
       },
     });
   }
