@@ -33,7 +33,7 @@ export class ActivityController {
   findOneById(@Param('id') id: number): Promise<Activity> {
     return this.activityService.findById(id);
   }
-  @Get(':slug')
+  @Get('/trip/:slug')
   findOne(@Param('slug') slug: string): Promise<Activity> {
     return this.activityService.findOne(slug);
   }
