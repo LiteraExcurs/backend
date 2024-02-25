@@ -51,6 +51,9 @@ export class ActivityService {
   async findOne(slug: string) {
     const activity = await this.activitiesRepository.findOne({
       where: { slug },
+      relations: {
+        events: true,
+      },
     });
     if (activity) {
       return activity;
