@@ -11,6 +11,7 @@ import {
   IsDate,
   IsEmail,
   IsNumber,
+  IsOptional,
   IsPhoneNumber,
   IsString,
 } from 'class-validator';
@@ -39,7 +40,8 @@ export class Booking {
   @IsEmail()
   email: string;
 
-  @Column('int')
+  @Column('int', { default: 1 })
+  @IsOptional()
   @IsNumber()
   visitors: number;
 
